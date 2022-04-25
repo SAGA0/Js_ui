@@ -1,3 +1,5 @@
 import $ from './lib/lib'
 
-$('.active').hide()
+$('button').on('click', function () {
+    $(this).toggleAttr('data-bitch', 'big');
+});
