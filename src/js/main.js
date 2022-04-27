@@ -1,5 +1,7 @@
 import $ from './lib/lib'
 
 $('button').on('click', function () {
-    $(this).toggleAttr('data-bitch', 'big');
+    console.log($('div').eq(2).find('some'));
 });
+
+console.log($('div').eq(2).find('.some'))
