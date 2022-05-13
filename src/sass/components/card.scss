@@ -1,0 +1,23 @@
+.card {
+    width: 350px;
+    background-color: #fff;
+    border: 1px solid $dark;
+    border-radius: 4px;
+    &-img{
+        width: 100%;
+    }
+    &-body{
+        padding: 15px;
+    }
+    &-tittle{
+        font-size: 20px;
+        font-weight: 600;
+    }
+    &-text{
+        font-size: 16px;
+        padding: 5px 0;
+    }
+    a{
+        text-decoration: none;
+    }
+}
