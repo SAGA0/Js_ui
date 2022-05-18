@@ -1,25 +1,25 @@
-import $ from '../core';
+import $ from '../core'
 
 $.prototype.addClass = function (...classNames) {
-    for (let i = 0; i < this.length; i++) {
-        this[i].classList.add(...classNames);
-    }
+	for (let i = 0; i < this.length; i++) {
+		this[i].classList.add(...classNames)
+	}
 
-    return this;
-};
+	return this
+}
 
 $.prototype.removeClass = function (...classNames) {
-    for (let i = 0; i < this.length; i++) {
-        this[i].classList.remove(...classNames);
-    }
+	for (let i = 0; i < this.length; i++) {
+		this[i].classList.remove(...classNames)
+	}
 
-    return this;
-};
+	return this
+}
 
 $.prototype.toggleClass = function (classNames) {
-    for (let i = 0; i < this.length; i++) {
-        this[i].classList.toggle(classNames);
-    }
+	for (let i = 0; i < this.length; i++) {
+		this[i].classList.toggle(classNames)
+	}
 
-    return this;
-};
+	return this
+}
