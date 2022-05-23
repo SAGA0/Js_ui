@@ -136,15 +136,115 @@ __webpack_require__.r(__webpack_exports__);
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.carousel = function () {
   for (let i = 0; i < this.length; i++) {
     const width = window.getComputedStyle(this[i].querySelector('.carousel-inner')).width;
-    const slides = this[i].querySelectorAll('.carousel-item');
-    this[i].querySelector('.carousel-slides').style.width = 100 * slides.length + '%';
+    const slides = [...this[i].querySelectorAll('.carousel-item')];
+    const slideField = this[i].querySelector('.carousel-slides');
+    const dots = [...this[i].querySelectorAll('.carousel-indicators li')];
+    slideField.style.width = 100 * slides.length + '%';
     slides.forEach(slide => {
       slide.style.width = width;
+    });
+    let offset = 0;
+    let slideIndex = 0;
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i].querySelector('[data-slide="next"]')).click(e => {
+      e.preventDefault();
+
+      if (offset == +width.replace(/\D/g, '') * (slides.length - 1)) {
+        offset = 0;
+      } else {
+        offset += +width.replace(/\D/g, '');
+      }
+
+      slideField.style.transform = `translateX(-${offset}px)`;
+
+      if (slideIndex == slides.length - 1) {
+        slideIndex = 0;
+      } else {
+        slideIndex++;
+      }
+
+      dots.forEach(dot => {
+        dot.classList.remove('active');
+      });
+      dots[slideIndex].classList.add('active');
+    });
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i].querySelector('[data-slide="prev"]')).click(e => {
+      e.preventDefault();
+
+      if (offset == 0) {
+        offset = +width.replace(/\D/g, '') * (slides.length - 1);
+      } else {
+        offset -= +width.replace(/\D/g, '');
+      }
+
+      slideField.style.transform = `translateX(-${offset}px)`;
+
+      if (slideIndex == 0) {
+        slideIndex = slides.length - 1;
+      } else {
+        slideIndex--;
+      }
+
+      dots.forEach(dot => {
+        dot.classList.remove('active');
+      });
+      dots[slideIndex].classList.add('active');
+    });
+    const slideId = this[i].getAttribute('id');
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(`#${slideId} .carousel-indicators li`).click(e => {
+      e.preventDefault();
+      const slideTo = e.target.getAttribute('data-slide-to');
+      slideIndex = slideTo;
+      offset = +width.replace(/\D/g, '') * slideTo;
+      slideField.style.transform = `translateX(-${offset}px)`;
+      dots.forEach(dot => {
+        dot.classList.remove('active');
+      });
+      dots[slideIndex].classList.add('active');
     });
   }
 };
 
-Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.carousel').carousel();
+Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('#example').carousel(); // setCaourusel = {width, height, slides: [{src: "", alt: ""}]}
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createCarousel = function (setCarousel) {
+  for (let i = 0; i < this.length; i++) {
+    const slidesCount = setCarousel.slides.length;
+    this[i].style.width = setCarousel.width + 'px';
+    this[i].style.height = setCarousel.height + 'px';
+    this[i].innerHTML = `
+        <ol class="carousel-indicators"></ol>
+            <div class="carousel-inner">
+            <div class="carousel-slides"></div>
+         </div></div>
+            <a href="" class="carousel-prev" data-slide="prev">
+                <span>&lt;</span>
+            </a>
+            <a href="" class="carousel-next" data-slide="next">
+                <span>&gt;</span>
+            </a>`;
+
+    for (let j = 0; j < slidesCount; j++) {
+      const dotItem = document.createElement("li"),
+            slideItem = document.createElement("div"),
+            slideImg = document.createElement("img");
+      dotItem.setAttribute("data-slide-to", `${j}`);
+      this[i].querySelector(".carousel-indicators").appendChild(dotItem);
+
+      if (j == 0) {
+        dotItem.classList.add("active");
+      }
+
+      this[i].querySelector(".carousel-slides").appendChild(slideItem);
+      slideItem.classList.add("carousel-item");
+      slideItem.style.width = this[i].style.width;
+      slideItem.appendChild(slideImg);
+      slideImg.setAttribute("src", setCarousel.slides[j]["src"]);
+      slideImg.setAttribute("alt", setCarousel.slides[j]["alt"]);
+    }
+  }
+
+  return this;
+};
 
 /***/ }),
 
@@ -843,6 +943,20 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').click(() =>
     }]]
   }
 }));
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])("#example2").createCarousel({
+  width: 850,
+  height: 500,
+  slides: [{
+    src: "https://tushlar.ru/wp-content/uploads/2021/02/tushda-mashina-1.jpg",
+    alt: "white-car"
+  }, {
+    src: "https://img1.goodfon.ru/original/1280x720/6/a1/lamborghini-aventador-1634.jpg",
+    alt: "red-car"
+  }, {
+    src: "https://img2.goodfon.ru/original/1280x720/7/99/lamborghini-murcielago-5124.jpg",
+    alt: "yellow-car"
+  }]
+}).carousel();
 
 /***/ })
 
