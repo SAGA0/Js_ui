@@ -455,6 +455,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_tabs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/tabs */ "./src/js/lib/components/tabs.js");
 /* harmony import */ var _components_accordion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/accordion */ "./src/js/lib/components/accordion.js");
 /* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/carousel */ "./src/js/lib/components/carousel.js");
+/* harmony import */ var _services_request__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/request */ "./src/js/lib/services/request.js");
+
 
 
 
@@ -889,6 +891,59 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handle
 
 /***/ }),
 
+/***/ "./src/js/lib/services/request.js":
+/*!****************************************!*\
+  !*** ./src/js/lib/services/request.js ***!
+  \****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.get = async function (url) {
+  let dataType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'json';
+  let res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+  }
+
+  switch (dataType) {
+    case 'json':
+      return await res.json();
+
+    case 'text':
+      return await res.text();
+
+    case 'blob':
+      return await res.blob();
+  }
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.post = async function (url, data) {
+  let dataType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'text';
+  let res = await fetch(url, {
+    method: 'POST',
+    body: data
+  });
+
+  switch (dataType) {
+    case 'json':
+      return await res.json();
+
+    case 'text':
+      return await res.text();
+
+    case 'blob':
+      return await res.blob();
+  }
+};
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
@@ -900,63 +955,6 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handle
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#first').on('click', () => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(1).fadeToggle(800);
-});
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-count="second"]').on('click', () => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(2).fadeToggle(800);
-});
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').eq(2).on('click', () => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w-500').fadeToggle(800);
-});
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#success').on('click', () => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w-500').fadeToggle(800);
-});
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.wrap').html(`
-<div class="dropdown">
-<button
-    class="btn btn-primary dropdown-toggle"
-    id="dropdownMenuButton"
->
-    Dropdown Button
-</button>
-         <div class="dropdown-menu" data-toggle-id="dropdownMenuButton">
-             <a href="#" class="dropdown-item">Action#1</a>
-            <a href="#" class="dropdown-item">Action#2</a>
-            <a href="#" class="dropdown-item">Action#3</a>
-        </div>
-    </div>
-</div>
-`);
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.dropdown-toggle').dropdown();
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').click(() => Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').createModal({
-  text: {
-    title: 'Modal',
-    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum minus doloremque nesciunt enim rem quam corporis?'
-  },
-  btns: {
-    count: 3,
-    settings: [['Close', ['btn-danger', 'mr-10'], 'true'], ['Save', ['btn-sucess'], 'false', () => {
-      alert('ur data saved');
-    }], ['Anth', ['btn-warning', 'ml-10'], 'false', () => {
-      alert('wtf is yellow');
-    }]]
-  }
-}));
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])("#example2").createCarousel({
-  width: 850,
-  height: 500,
-  slides: [{
-    src: "https://tushlar.ru/wp-content/uploads/2021/02/tushda-mashina-1.jpg",
-    alt: "white-car"
-  }, {
-    src: "https://img1.goodfon.ru/original/1280x720/6/a1/lamborghini-aventador-1634.jpg",
-    alt: "red-car"
-  }, {
-    src: "https://img2.goodfon.ru/original/1280x720/7/99/lamborghini-murcielago-5124.jpg",
-    alt: "yellow-car"
-  }]
-}).carousel();
 
 /***/ })
 
